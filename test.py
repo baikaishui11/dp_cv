@@ -1,9 +1,16 @@
-import numpy as np
+import torch
+import torch.nn as nn
+from torchvision import models
 
-print(np.random.permutation(6))
 
-a = np.array([1, 2, 3, 4, 5, 6])
-b = np.random.permutation(a)
-index = b[0: 3]
-print(index)
-print(a[index])
+if __name__ == '__main__':
+    # pool = nn.MaxPool2d(3, stride=2)
+    # x = torch.randn(2, 48, 13, 13)
+    # x = pool(x)
+    # print(x.shape)
+    # net = models.AlexNet()
+    # print(net)
+    # z = torch.flatten(x, 2)
+    # print(z.shape)
+    lst = [1, 2, 3, 4]
+    print(lst.val)
