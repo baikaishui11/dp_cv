@@ -10,6 +10,7 @@ import numpy as np
 from torch.utils.tensorboard import SummaryWriter
 
 
+
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -52,7 +53,7 @@ def fetch_dataloader(batch_size):
     train_dataset = CaliforniaDataset(x_train, y_train)
     test_dataset = CaliforniaDataset(x_test, y_test)
 
-    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,)
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, )
 
     test_dataloader = DataLoader(test_dataset, batch_size=batch_size * 4, shuffle=False)
     return train_dataloader, test_dataloader
@@ -129,4 +130,3 @@ def training(restore_path=None):
 if __name__ == "__main__":
     training()
     # t1()
-
