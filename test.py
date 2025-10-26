@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torchvision import models
+import torch
 
 
 if __name__ == '__main__':
@@ -12,5 +13,10 @@ if __name__ == '__main__':
     # print(net)
     # z = torch.flatten(x, 2)
     # print(z.shape)
-    lst = [1, 2, 3, 4]
-    print(lst.val)
+    # lst = [1, 2, 3, 4]
+    # print(lst.val)
+    x = torch.rand((3, 4, 55, 55))
+    n, c, h, w = x.shape
+    for i in range(n):
+        a = x[i: i+1]
+        print(a.shape)

@@ -11,7 +11,6 @@ from dp_cv.modules import metrics
 import onnxruntime as ort
 
 
-
 class IrisNetwork(nn.Module):
     def __init__(self):
         super(IrisNetwork, self).__init__()
