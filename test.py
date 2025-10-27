@@ -15,8 +15,10 @@ if __name__ == '__main__':
     # print(z.shape)
     # lst = [1, 2, 3, 4]
     # print(lst.val)
-    x = torch.rand((3, 4, 55, 55))
-    n, c, h, w = x.shape
-    for i in range(n):
-        a = x[i: i+1]
-        print(a.shape)
+    # x = torch.rand((3, 4, 55, 55))
+    # n, c, h, w = x.shape
+    # for i in range(n):
+    #     a = x[i: i+1]
+    #     print(a.shape)
+    model = models.googlenet(pretrained=True)
+    print(model)
