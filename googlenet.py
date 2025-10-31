@@ -22,6 +22,17 @@ class BasicConv2d(nn.Module):
         return self.relu(self.conv(x))
 
 
+# class BasicConv2d(nn.Module):
+#     def __init__(self, in_channels, out_channels, kernel_size, stride, padding):
+#         super(BasicConv2d, self).__init__()
+#         self.bn = nn.BatchNorm2d(in_channels)
+#         self.relu = nn.ReLU()
+#         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding)
+#
+#     def forward(self, x):
+#         return self.relu(self.conv(self.bn(x)))
+
+
 class Inception(nn.Module):
     def __init__(self, in_channels, out_channels):
         """
