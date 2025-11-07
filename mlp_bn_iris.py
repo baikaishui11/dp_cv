@@ -11,21 +11,62 @@ from dp_cv.modules import metrics
 import onnxruntime as ort
 
 
+# class IrisNetwork(nn.Module):
+#     def __init__(self):
+#         super(IrisNetwork, self).__init__()
+#         self.classify = nn.Sequential(
+#             nn.Linear(4, 128),
+#             nn.BatchNorm1d(128),
+#             nn.ReLU(),
+#             nn.Linear(128, 64),
+#             nn.BatchNorm1d(64),
+#             nn.ReLU(),
+#             nn.Linear(64, 32),
+#             nn.BatchNorm1d(32),
+#             nn.ReLU(),
+#             nn.Linear(32, 3)
+#         )
+#
+#     def forward(self, x):
+#         return self.classify(x)
+
+
 class IrisNetwork(nn.Module):
-    def __init__(self):
+    def __init__(self, gama=1.0, beta=0):
         super(IrisNetwork, self).__init__()
-        self.classify = nn.Sequential(
-            nn.Linear(4, 128),
-            nn.ReLU(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, 32),
-            nn.ReLU(),
-            nn.Linear(32, 3)
-        )
+        self.gama = gama
+        self.beta = beta
+
+        self.w1 = nn.Parameter(torch.empty(4, 128))
+        self.b1 = nn.Parameter(torch.empty(128))
+        self.w2 = nn.Parameter(torch.empty(128, 64))
+        self.b2 = nn.Parameter(torch.empty(64))
+        self.w3 = nn.Parameter(torch.empty(64, 32))
+        self.b3 = nn.Parameter(torch.empty(32))
+        self.w4 = nn.Parameter(torch.empty(32, 3))
+        self.b4 = nn.Parameter(torch.empty(3))
+
+        nn.init.kaiming_uniform_(self.w1)
+        nn.init.kaiming_uniform_(self.w2)
+        nn.init.kaiming_uniform_(self.w3)
+        nn.init.kaiming_uniform_(self.w4)
+
+        nn.init.constant_(self.b1, 0.1)
+        nn.init.constant_(self.b2, 0.1)
+        nn.init.constant_(self.b3, 0.1)
+        nn.init.constant_(self.b4, 0.1)
 
     def forward(self, x):
-        return self.classify(x)
+        self.mean = torch.mean(x, dim=1, keepdim=True)
+        self.std = torch.std(x, dim=1, keepdim=True)
+        x = (((x - self.mean) / (self.std + 1e-5)) * self.gama + self.beta) @ self.w1 + self.b1
+        x = torch.relu(x)
+        x = (((x - self.mean) / (self.std + 1e-5)) * self.gama + self.beta) @ self.w2 + self.b2
+        x = torch.relu(x)
+        x = (((x - self.mean) / (self.std + 1e-5)) * self.gama + self.beta) @ self.w3 + self.b3
+        x = torch.relu(x)
+        x = x @ self.w4 + self.b4
+        return x
 
 
 def save(obj, path):
@@ -74,15 +115,15 @@ def training():
     acc_fn = metrics.Accuracy()
     opt = optim.SGD(net.parameters(), lr=0.005)
 
-    if best_path.exists():
-        start_epoch, train_batch, test_batch, best_acc = load(best_path, net)
-    elif last_path.exists():
-        start_epoch, train_batch, test_batch, best_acc = load(last_path, net)
+    # if best_path.exists():
+    #     start_epoch, train_batch, test_batch, best_acc = load(best_path, net)
+    # elif last_path.exists():
+    #     start_epoch, train_batch, test_batch, best_acc = load(last_path, net)
 
     writer = SummaryWriter(summary_dir)
     writer.add_graph(net, torch.rand(3, 4))
 
-    for epoch in range(start_epoch, total_epoch+start_epoch):
+    for epoch in range(start_epoch, total_epoch + start_epoch):
         net.train()
         train_losses = []
         train_true, train_total = 0, 0
@@ -123,7 +164,8 @@ def training():
                 test_losses.append(loss.item())
 
         writer.add_scalars("loss", {"train": np.mean(train_losses), "test": np.mean(test_losses)}, global_step=epoch)
-        writer.add_scalars("acc", {"train": train_true / train_total, "test": test_true / test_total}, global_step=epoch)
+        writer.add_scalars("acc", {"train": train_true / train_total, "test": test_true / test_total},
+                           global_step=epoch)
 
         if (test_true / test_total) > best_acc:
             obj = {

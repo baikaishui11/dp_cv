@@ -48,9 +48,20 @@ if __name__ == '__main__':
     # b = torch.squeeze(a, dim=0)
     # print(a.shape)
     # print(b.shape)
-    a = torch.rand(16, 28, 28)
-    c, h, w = a.shape
-    for i in range(c):
-        b = a[i: i+1]
-        print(b.shape)
-        print(b)
+    # a = torch.rand(16, 28, 28)
+    # c, h, w = a.shape
+    # for i in range(c):
+    #     b = a[i: i+1]
+    #     print(b.shape)
+    #     print(b)
+    a = torch.rand(4, 150)
+    mean = torch.mean(a, dim=1, keepdim=True)
+    std = torch.std(a, dim=1, keepdim=True)
+    z = mean / (std + 1e-5)
+    w = torch.rand(4, 128)
+    x = w * z
+
+    print(mean.shape)
+    print(std.shape)
+    print(z.shape)
+    print(x.shape)
