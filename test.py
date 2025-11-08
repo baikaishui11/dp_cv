@@ -54,14 +54,32 @@ if __name__ == '__main__':
     #     b = a[i: i+1]
     #     print(b.shape)
     #     print(b)
-    a = torch.rand(4, 150)
-    mean = torch.mean(a, dim=1, keepdim=True)
-    std = torch.std(a, dim=1, keepdim=True)
-    z = mean / (std + 1e-5)
-    w = torch.rand(4, 128)
-    x = w * z
-
-    print(mean.shape)
-    print(std.shape)
-    print(z.shape)
-    print(x.shape)
+    # a = torch.rand(4, 150)
+    # mean = torch.mean(a, dim=1, keepdim=True)
+    # std = torch.std(a, dim=1, keepdim=True)
+    # z = mean / (std + 1e-5)
+    # w = torch.rand(4, 128)
+    # x = w * z
+    #
+    # print(mean.shape)
+    # print(std.shape)
+    # print(z.shape)
+    # print(x.shape)
+    # a = torch.rand(8, 12, 32, 32)
+    # mean = torch.mean(a, dim=(1, 2, 3), keepdim=True)
+    # std = torch.std(a, dim=(1, 2, 3), keepdim=True)
+    # # z = mean / (std + 1e-5)
+    # # w = torch.rand(4, 128)
+    # # x = w * z
+    #
+    # print(mean.shape)
+    # print(std.shape)
+    # a = torch.rand(16)
+    # print(a.shape)
+    # a = a[:, None, None, None]
+    # print(a.shape)
+    convbn = nn.Conv2d(8, 8, 1, 1)
+    nw = torch.ones(8)
+    nw = torch.diag(nw)
+    nw = nw[:, :, None, None]
+    print(nw.shape)
