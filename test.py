@@ -78,8 +78,19 @@ if __name__ == '__main__':
     # print(a.shape)
     # a = a[:, None, None, None]
     # print(a.shape)
-    convbn = nn.Conv2d(8, 8, 1, 1)
-    nw = torch.ones(8)
-    nw = torch.diag(nw)
-    nw = nw[:, :, None, None]
-    print(nw.shape)
+    # convbn = nn.Conv2d(8, 8, 1, 1)
+    # nw = torch.ones(8)
+    # nw = torch.diag(nw)
+    # nw = nw[:, :, None, None]
+    # print(nw.shape)
+    # import numpy as np
+    #
+    # a = np.array([1, 5, 2, 3, 2, 3, 5, 2])
+    # # b = np.bincount(a)
+    # # print(b)
+    # b = np.array([1, 5, 2, 3, 2, 2, 5, 2])
+    #
+    # c = np.bincount(a, b)
+    # print(c)
+    # print(c.shape)
+    pass
