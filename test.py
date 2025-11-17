@@ -93,4 +93,5 @@ if __name__ == '__main__':
     # c = np.bincount(a, b)
     # print(c)
     # print(c.shape)
-    pass
+    from torchvision import datasets
+    

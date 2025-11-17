@@ -30,7 +30,7 @@ def t1():
     tfs = transforms.ToTensor()
 
     image_path = {
-        "小狗": r"./datas/小狗.png",
+        "小狗": r"./datas/dog.png",
         "小狗2": r"./datas/小狗2.png",
         "小猫": r"./datas/小猫.jpg",
         "小猫2": r"./datas/小猫2.jpg",

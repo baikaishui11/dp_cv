@@ -36,7 +36,7 @@ if __name__ == '__main__':
     vgg.eval().cpu()
     output_dir = Path("./output/vgg/features/")
     image_path = {
-        "小狗": r"./datas/小狗.png",
+        "小狗": r"./datas/dog.png",
         "小狗2": r"./datas/小狗2.png",
         "小猫": r"./datas/小猫.jpg",
         "小猫2": r"./datas/小猫2.jpg",
