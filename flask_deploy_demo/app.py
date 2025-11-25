@@ -5,6 +5,7 @@ from model_predictor import ModelPredictor
 app = Flask(__name__)
 predictor = ModelPredictor()
 
+
 @app.route("/")
 @app.route("/index")
 def index():
@@ -31,6 +32,7 @@ def tt_params(name="xiaoming", age=16):
         "adress": adress
     })
 
+
 @app.route("/predict", methods=["GET", "POST"])
 def predict():
     if request.method == "GET":
@@ -42,7 +44,7 @@ def predict():
     # 根据接口解析参数，例如将base64字符串转化为图片在传入模型进行预测
     _value = _args.get("value")
     if _value is None:
-        return jsonify({"code":201, "msg": "请给定有效参数"})
+        return jsonify({"code": 201, "msg": "请给定有效参数"})
 
     _result = predictor.predictor(_value)
     return jsonify({
