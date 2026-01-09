@@ -94,4 +94,10 @@ if __name__ == '__main__':
     # print(c)
     # print(c.shape)
     from torchvision import datasets
+    a = torch.randn(4, 3, 112, 112)
+    a = a[None]
+    print(a.shape)
+    b = torch.randn(4, 3, 112, 112)
+    b = b[:, :, :, :, None]
+    print(b.shape)
     
